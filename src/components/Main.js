@@ -31,6 +31,8 @@ export default class Main extends Component {
     const { tarefas } = this.state;
     let { novaTarefa } = this.state;
     novaTarefa = novaTarefa.trim();
+    console.log(novaTarefa);
+    if (novaTarefa === '') return;
 
     if (tarefas.indexOf(novaTarefa) !== -1) return;
 
@@ -45,6 +47,20 @@ export default class Main extends Component {
     this.setState({
       novaTarefa: e.target.value,
     });
+  }
+
+  handleDelete = (e, index) => {
+    const { tarefas } = this.state;
+    const novasTarefas = [...tarefas];
+    novasTarefas.splice(index, 1);
+
+    this.setState({
+      tarefas: [...novasTarefas],
+    });
+  }
+
+  handleEdit = (e, index) => {
+    console.log('Edit', index);
   }
 
   // inputMudou(e) {
@@ -72,12 +88,18 @@ export default class Main extends Component {
         </form>
 
         <ul className="tarefas">
-          {tarefas.map((tarefa) => (
+          {tarefas.map((tarefa, index) => (
             <li key={tarefa}>
               {tarefa}
               <span>
-                <FaEdit className="edit" />
-                <FaWindowClose className="delete" />
+                <FaEdit
+                  onClick={(e) => this.handleEdit(e, index)}
+                  className="edit"
+                />
+                <FaWindowClose
+                  onClick={(e) => this.handleDelete(e, index)}
+                  className="delete"
+                />
               </span>
             </li>
           ))}
