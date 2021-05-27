@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 
+import Form from './Form';
+import Tarefas from './Tarefas';
+
 import './Main.css';
-
-// # Form
-// eslint-disable-next-line
-import { FaPlus } from 'react-icons/fa';
-
-// # Tarefas
-// eslint-disable-next-line
-import { FaEdit, FaWindowClose } from 'react-icons/fa';
 
 export default class Main extends Component {
   state = {
@@ -64,6 +59,7 @@ export default class Main extends Component {
       this.setState({
         tarefas: [...novasTarefas],
         index: -1,
+        novaTarefa: '',
       });
     }
   }
@@ -105,34 +101,16 @@ export default class Main extends Component {
 
         <h1> Lista de tarefas </h1>
 
-        <form onSubmit={this.handleSubmit} action="#" className="form">
-          <input
-            onChange={this.handleChange}
-            type="text"
-            value={novaTarefa}
-          />
-          <button type="submit">
-            <FaPlus />
-          </button>
-        </form>
-
-        <ul className="tarefas">
-          {tarefas.map((tarefa, index) => (
-            <li key={tarefa}>
-              {tarefa}
-              <span>
-                <FaEdit
-                  onClick={(e) => this.handleEdit(e, index)}
-                  className="edit"
-                />
-                <FaWindowClose
-                  onClick={(e) => this.handleDelete(e, index)}
-                  className="delete"
-                />
-              </span>
-            </li>
-          ))}
-        </ul>
+        <Form
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          novaTarefa={novaTarefa}
+        />
+        <Tarefas
+          handleDelete={this.handleDelete}
+          handleEdit={this.handleEdit}
+          tarefas={tarefas}
+        />
       </div>
     );
   }
